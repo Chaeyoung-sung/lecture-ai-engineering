@@ -22,12 +22,38 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pytest pandas scikit-learn pytest-cov psutil
+        pip install pytest pandas scikit-learn pytest-cov psutil great_expectations
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         
     # シンプルな形に修正し、基本的なテストだけを実行
     - name: Run model tests
       run: |
-        echo "Running model tests"
+        echo "Running basic model tests"
+        # 基本モデルテスト
         pytest "day5/演習3/tests/test_model.py::test_model_exists" -v || true
         pytest "day5/演習3/tests/test_model.py::test_model_accuracy" -v || true
+        pytest "day5/演習3/tests/test_model.py::test_model_inference_time" -v || true
+        pytest "day5/演習3/tests/test_model.py::test_model_reproducibility" -v || true
+        
+        echo "Running comprehensive metrics tests"
+        # 総合評価指標テスト
+        pytest "day5/演習3/tests/test_model.py::test_model_comprehensive_metrics" -v || true
+        
+        echo "Running model comparison tests"
+        # 過去モデルとの比較テスト
+        pytest "day5/演習3/tests/test_model.py::test_compare_with_previous_model" -v || true
+        
+        echo "Running model analysis tests"
+        # モデル特性分析テスト
+        pytest "day5/演習3/tests/test_model.py::test_model_feature_importance" -v || true
+        pytest "day5/演習3/tests/test_model.py::test_model_drift_detection" -v || true
+        
+        echo "Running technical validation tests"
+        # 技術検証テスト
+        pytest "day5/演習3/tests/test_model.py::test_model_serialization_format" -v || true
+        pytest "day5/演習3/tests/test_model.py::test_prediction_consistency" -v || true
+        pytest "day5/演習3/tests/test_model.py::test_model_resource_usage" -v || true
+        
+        echo "Generating coverage report"
+        # カバレッジレポート生成
+        pytest "day5/演習3/tests/test_model.py" --cov="day5/演習3" --cov-report=term-missing || true
