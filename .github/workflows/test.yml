@@ -64,24 +64,25 @@ jobs:
         echo "\n==== テストカバレッジレポート ===="
         pytest day5/演習3/tests/test_model.py --cov=day5/演習3 --cov-report=term-missing
         
-    - name: Create test results directory
-      run: |
-        mkdir -p test_results
+    # 一時的にアーティファクトアップロードを無効化
+    # - name: Create test results directory
+    #   run: |
+    #     mkdir -p test_results
         
-    - name: Save model metrics
-      run: |
-        cp day5/演習3/models/model_metrics.json test_results/model_metrics.json || echo "No metrics file found"
+    # - name: Save model metrics
+    #   run: |
+    #     cp day5/演習3/models/model_metrics.json test_results/model_metrics.json || echo "No metrics file found"
         
-    - name: Create report summary
-      run: |
-        echo "# MLOps テスト結果レポート" > test_results/report.md
-        echo "\n## モデル評価結果" >> test_results/report.md
-        echo '```json' >> test_results/report.md
-        cat day5/演習3/models/model_metrics.json >> test_results/report.md || echo "{}" >> test_results/report.md
-        echo '```' >> test_results/report.md
+    # - name: Create report summary
+    #   run: |
+    #     echo "# MLOps テスト結果レポート" > test_results/report.md
+    #     echo "\n## モデル評価結果" >> test_results/report.md
+    #     echo '```json' >> test_results/report.md
+    #     cat day5/演習3/models/model_metrics.json >> test_results/report.md || echo "{}" >> test_results/report.md
+    #     echo '```' >> test_results/report.md
         
-    - name: Upload test results
-      uses: actions/upload-artifact@v2
-      with:
-        name: mlops-test-results
-        path: test_results/
+    # - name: Upload test results
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: mlops-test-results
+    #     path: test_results/
