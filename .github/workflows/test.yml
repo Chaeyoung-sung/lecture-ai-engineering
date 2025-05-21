@@ -81,7 +81,7 @@ jobs:
         echo '```' >> test_results/report.md
         
     - name: Upload test results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v2
       with:
         name: mlops-test-results
         path: test_results/
